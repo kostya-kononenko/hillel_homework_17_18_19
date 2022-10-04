@@ -1,0 +1,12 @@
+{% extends 'base1.html' %}
+{% block content %}
+<h1>Users: {{page_obj.paginator.count }}</h1>
+<ul>
+    {% for user in object_list %}
+        <li>
+            <a href="{% url 'authors-detail' pk=user.pk%}"> <p>{{ user.username }}</p></a>
+
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

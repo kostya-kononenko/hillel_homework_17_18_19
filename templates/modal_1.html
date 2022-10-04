@@ -1,0 +1,22 @@
+<form method="post" action="{% url 'contact' %}" class="jx-jx">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Email Send Send</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-info d-none" role="alert"></div>
+
+              <div class="modal-body">
+
+                    {{ form }}
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <div class="form-actions">
+
+                        <button type="submit" class="btn btn-secondary">Send Email</button>
+
+                  </div>
+              </div>
+        </form>

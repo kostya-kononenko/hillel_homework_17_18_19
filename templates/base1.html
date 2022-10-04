@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+          integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+          crossorigin="anonymous"></script>
+
+    <title>User authenticate</title>
+</head>
+
+
+{% load static %}
+
+{% block extra_js %}
+  <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
+
+<body>
+<div class="container-fluid">
+    {% if messages %}
+        <div class="row">
+          <div class="col-sm-12">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+                <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}
+                  {{ message.tags|title }}{% endif %}!</strong> {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-sm-2">
+            <ul>
+                <li class="list-group-item">
+                    <a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'admin:index' %}">Admin</a>
+                </li>
+                 <li class="list-group-item">
+                     <a href="{% url 'post-list' %}">Posts</a>
+                 </li>
+                <li class="list-group-item">
+                    <a href="{% url 'authors-list' %}">Users</a>
+                </li>
+                    <li class="list-group-item">
+                    <a type="button" class="btn btn-info js-contact" href="#" data-bs-toggle="modal" data-bs-target="#contact"
+                        data-url="{% url 'contact' %}">
+                         Contact
+                    </a>
+                </li>
+
+            </ul>
+            {% if request.user.is_authenticated %}
+               <ul>
+                   <li class="list-group-item">User: {{ user }}</li>
+                   <li class="list-group-item"><a href="{% url 'post-create' %}">Post Create</a></li>
+                   <li class="list-group-item"><a href="{% url 'post_update-list' %}">My posts</a></li>
+                   <li class="list-group-item"><a href="{% url 'my_profile' %}">Profile</a></li>
+                   <li class="list-group-item"><a href="{% url 'logout' %}">Logout</a></li>
+
+
+               </ul>
+            {% else %}
+                <ul>
+                    <li class="list-group-item">
+                        <a href="{% url 'login' %}">Login</a> | <a href="{%url 'register' %}">Register</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+          <div class="col-sm-10">
+                {% block content %}
+                {% endblock %}
+                    {% block pagination %}
+                        {% if is_paginated %}
+                          <div class="pagination">
+                            <span class="page-links">
+                                {% if page_obj.has_previous %}
+                                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                                {% endif %}
+                              <span class="page-current">
+                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                </span>
+                              {% if page_obj.has_next %}
+                                <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                              {% endif %}
+                            </span>
+                          </div>
+                        {% endif %}
+                    {% endblock %}
+          </div>
+      </div>
+
+
+<div class="modal fade" id="contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

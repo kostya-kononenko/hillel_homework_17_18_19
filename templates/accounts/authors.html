@@ -1,0 +1,39 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <h3>Name: {{ profile.username }}</h3>
+    <p>email: {{ profile.email }}</p>
+    <p>First name: {{ profile.first_name }}</p>
+    <p>Last name: {{ profile.last_name }}</p>
+    <h3>Post: {{ profile.post_set.count }}</h3>
+
+    {% for post in posts %}
+        <ul>
+            <li>
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </li>
+        </ul>
+    {% endfor %}
+
+ {% if posts.has_other_pages %}
+    <div class="pagination">
+    {% if posts.has_previous %}
+      <li><a href="?page={{ posts.previous_page_number }}"> previous </a></li>
+    {% else %}
+      <li class="disabled"><span> previous </span></li>
+    {% endif %}
+    {% for i in posts.paginator.page_range %}
+      {% if posts.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(page)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+      <li><a href="?page={{ posts.next_page_number }}"> next </a></li>
+    {% else %}
+      <li class="disabled"><span> next </span></li>
+    {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

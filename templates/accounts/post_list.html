@@ -1,0 +1,11 @@
+{% extends 'base1.html' %}
+{% block content %}
+<h1>Total posts: {{page_obj.paginator.count }}</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                <a href="{% url 'post-detail' post.pk%}"> <p>{{ post.title }}</p></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base1.html' %}
+{% block content %}
+            <h3>{{ post.title }}</h3>
+            <p>author: {{ post.author}}</p>
+            <p>short_description: {{ post.short_description }}</p>
+            <p>full_description: {{ post.full_description }}</p>
+            <p>image: {{ post.image }}</p>
+            <p>date post: {{ post.data_post }}</p>
+            <form>
+                <button formaction="{% url 'comment-create' post.pk%}">Add comment</button>
+            </form>
+            <h3>published comments: {{ comments.count }}</h3>
+
+            {% for comment in page_obj %}
+                <ul>
+                    <li>
+                        <a href="{{ comment.get_absolute_url }}">{{ comment }}</a>
+                    </li>
+                </ul>
+            {% endfor %}
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'base1.html' %}
+{% block content %}
+    <p>username: {{ comment.username }}</p>
+    <p>text comment: {{ comment.text_comment }}</p>
+    <a href="{% url 'post-detail' comment.posts.pk%}"> <p>post: {{ comment.posts }}</p></a>
+{% endblock %}
